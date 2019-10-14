@@ -12,7 +12,7 @@ restic_conf = custom_target('restic-backup.conf.man',
                                       '--to', 'man',
                                       '--output', '@OUTPUT@',
                                       '@INPUT@'],
-                            input: files('restic-backup.conf.md'),
+                            input: files('restic-backup.conf.5.md'),
                             output: files('restic-backup.conf.5'))
 
 unit_files = files('restic-backup.service',
