@@ -1,4 +1,4 @@
-project('systemd-restic-backup')
+project('systemd-restic-backup', version: '1')
 
 systemd = dependency('systemd')
 set_variable('unit_dir', join_paths(systemd.get_pkgconfig_variable('prefix'), 'lib', 'systemd', 'system'))
