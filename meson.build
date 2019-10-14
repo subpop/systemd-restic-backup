@@ -7,9 +7,13 @@ set_variable('user_unit_dir', join_paths(systemd.get_pkgconfig_variable('prefix'
 pandoc = find_program('pandoc')
 
 restic_conf = custom_target('restic-backup.conf.man',
-                            command: [pandoc, '--from', 'markdown', '--to', 'man', '@INPUT@'],
+                            command: [pandoc,
+                                      '--from', 'markdown',
+                                      '--to', 'man',
+                                      '--output', '@OUTPUT@',
+                                      '@INPUT@'],
                             input: files('restic-backup.conf.md'),
-                            output: files('restic-backup.conf.5.man'))
+                            output: files('restic-backup.conf.5'))
 
 unit_files = files('restic-backup.service',
                    'restic-backup.timer',
