@@ -6,14 +6,16 @@ set_variable('user_unit_dir', join_paths(systemd.get_pkgconfig_variable('prefix'
 
 pandoc = find_program('pandoc')
 
-man_page = custom_target('man page',
-                         command: [pandoc,
-                                   '--from', 'markdown',
-                                   '--to', 'man',
-                                   '--output', '@OUTPUT@',
-                                   '@INPUT@'],
-                         input: ['restic-backup.conf.5.md'],
-                         output: ['restic-backup.conf.5'])
+custom_target('man page',
+              command: [pandoc,
+                        '--from', 'markdown',
+                        '--to', 'man',
+                        '--output', '@OUTPUT@',
+                        '@INPUT@'],
+              install: true,
+              install_dir: join_paths(get_option('prefix'), get_option('mandir'), 'man5'),
+              input: ['restic-backup.conf.5.md'],
+              output: ['restic-backup.conf.5'])
 
 unit_files = files('restic-backup.service',
                    'restic-backup.timer',
@@ -30,5 +32,3 @@ install_data(unit_files,
 install_data(instantiated_unit_files,
              install_mode: 'rw-r--r--',
              install_dir: get_variable('unit_dir'))
-
-install_man(man_page.full_path())
